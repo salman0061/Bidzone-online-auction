@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User View Items</title>
+    <style>
+        /* Reset and General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h3 {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #555;
+        }
+        /* Item Styles */
+        .item {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .item p {
+            margin-bottom: 15px;
+        }
+        .item img {
+            display: block;
+            margin: 0 auto 15px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .item a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .item a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    <h3>User View Items</h3>
+    {% for item in items %}
+    <div class="item">
+        <p><strong>Username:</strong> {{ item[1] }}</p>
+        <p><strong>Item Name:</strong> {{ item[2] }}</p>
+        <p><strong>Description:</strong> {{ item[3] }}</p>
+        <p><strong>Category:</strong> {{ item[4] }}</p>
+        <p><strong>Starting Price:</strong> {{ item[5] }}</p>
+        <p><strong>Status:</strong> {{ item[6] }}</p>
+        <p><strong>Upload Time:</strong> {{ item[7] }}</p>
+        <img src="{{ url_for('static', filename=item[8]+'.jpg') }}" class="card-img-top" alt="Item Picture">
+        <a href="{{ url_for('add_to_favourites', item_id=item[0], username=item[1], item_name=item[2], description=item[3], category=item[4], starting_price=item[5], status=item[6], iid=item[8]) }}">Add to Favorites</a>
+        <a href="{{url_for('biditems', item_id=item[0])}}">Bid to the Item</a>
+    </div>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h3 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+        p {
+            margin-bottom: 5px;
+        }
+        .item-container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .item-container img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .item-actions a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .item-actions a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    <h3>View the Items</h3>
+    {% for i in items %}
+    <div class="item-container">
+        <p><strong>Username:</strong> {{i[1]}}</p>
+        <p><strong>Item Name:</strong> {{i[2]}}</p>
+        <p><strong>Description:</strong> {{i[3]}}</p>
+        <p><strong>Category:</strong> {{i[4]}}</p>
+        <p><strong>Starting Price:</strong> {{i[5]}}</p>
+        <p><strong>Status:</strong> {{i[6]}}</p>
+        <p><strong>Upload Time:</strong> {{i[7]}}</p>
+        <img src="{{ url_for('static', filename=i[8]+'.jpg') }}" class="card-img-top" alt="Item Picture">
+        <div class="item-actions">
+            <a href="{{url_for('update_item',itemid=i[0])}}">Update Item</a>
+            <a href="{{url_for('deleteitem',itemid=i[0])}}">Delete Item</a>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+</html>

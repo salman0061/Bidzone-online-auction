@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Item</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea,
+        select,
+        input[type="number"] {
+            width: calc(100% - 10px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        select {
+            width: 100%;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    <h2>Upload Item</h2>
+    {% for i in items %}
+    <form action="#" method="POST" enctype="multipart/form-data">
+        <label for="item_name">Item Name:</label>
+        <input type="text" id="item_name" name="item_name" value="{{i[2]}}" placeholder="{{i[2]}}" required><br><br>
+
+        <label for="dis">Description:</label><br>
+        <textarea id="dis" name="dis" rows="4" cols="50" placeholder="{{i[3]}}" required>{{i[3]}}</textarea><br><br>
+
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            <option value="art" {% if i[4] == 'art' %} selected {% endif %}>Art</option>
+            <option value="antiques" {% if i[4] == 'antiques' %} selected {% endif %}>Antiques</option>
+            <option value="electronics" {% if i[4] == 'electronics' %} selected {% endif %}>Electronics</option>
+            <option value="collectibles" {% if i[4] == 'collectibles' %} selected {% endif %}>Collectibles</option>
+            <option value="fashion" {% if i[4] == 'fashion' %} selected {% endif %}>Fashion</option>
+            <option value="other_category" {% if i[4] == 'other_category' %} selected {% endif %}>Other Category</option>
+        </select><br><br>
+
+        <label for="starting_price">Starting Price:</label>
+        <input type="number" id="starting_price" name="starting_price" value="{{i[5]}}" placeholder="{{i[5]}}" required><br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+    {% endfor %}
+</body>
+</html>

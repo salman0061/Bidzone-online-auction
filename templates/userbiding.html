@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Bidding to the Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h3 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 5px;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 200px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+
+        .no-bids {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+        {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    <h3>User Bidding to the Items</h3>
+    {% for i in items %}
+    <p>Username: {{i[1]}}</p>
+    <p>Item Name: {{i[2]}}</p>
+    <p>Description: {{i[3]}}</p>
+    <p>Category: {{i[4]}}</p>
+    <p>Starting Price: {{i[5]}}</p>
+    <p>Status: {{i[6]}}</p>
+    <p>Upload Time: {{i[7]}}</p>
+    <img src="{{ url_for('static', filename=i[8]+'.jpg') }}" class="card-img-top" alt="Item Picture">
+    <form method="POST" action="{{ url_for('placed_bids', itemid=i[0]) }}">
+        <label for="bid_amount">Your Bid Amount:</label>
+        <input type="number" id="bid_amount" name="bid_amount" min="{{ i[5] }}" required>
+        <button type="submit">Place Bid</button>
+    </form>
+   
+    <form method="POST" action="{{ url_for('stop_auction', item_id=i[0]) }}">
+        <button type="submit">Stop Auction</button>
+    </form>
+    {% endfor %}
+    {% if bids %}
+        {% for i in bids %}
+            <p>Username: {{i[3]}}</p>
+            <p>Bid Amount: {{i[4]}}</p>
+            <p>Bid Time: {{i[5]}}</p>
+            <p>Bid Increment: {{i[7]}}</p>
+        {% endfor %}
+    {% else %}
+        <p class="no-bids">No bids are placed</p>
+    {% endif %}
+</body>
+</html>

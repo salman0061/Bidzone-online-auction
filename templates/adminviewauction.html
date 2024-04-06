@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin view auction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        h3 {
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .item-details {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .auction-details {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+{% if details %}
+    {% for i in items %}
+        <div class="item-details">
+            <h3>Item details</h3>
+            <p>Item name: {{ i[2] }}</p>
+            <p>Item description: {{ i[3] }}</p>
+            <p>Item category: {{ i[4] }}</p>
+        </div>
+    {% endfor %}
+
+    {% for i in details %}
+        <div class="auction-details">
+            <h3>Auction details</h3>
+            <p>Auction data</p>
+            <p>Starting price: {{ i[3] }}</p>
+            <p>Auction start: {{ i[4] }}</p>
+            <p>Auction end: {{ i[5] }}</p>
+            <p>Status: {{ i[6] }}</p>
+            <p>Winning bidder username: {{ i[7] }}</p>
+            <p>Winning bid amount: {{ i[8] }}</p>
+        </div>
+    {% endfor %}
+
+{% else %}
+    <p>No winning bids are there.</p>
+{% endif %}
+
+</body>
+</html>
